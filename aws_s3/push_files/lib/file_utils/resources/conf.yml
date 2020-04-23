@@ -1,4 +1,0 @@
-aws:
-  default-region: "eu-west-1"
-  bucket-name: "s3-veben-test"
-  profile: "p-dev"

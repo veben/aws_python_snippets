@@ -1,0 +1,8 @@
+aws:
+  default-region: "eu-west-1"
+  profile: "p-dev"
+  glue:
+    database: "pokemons"
+    crawler-name: "pokemon-csv-crawler"
+  s3:
+    folder-path: "s3://aws-glue-pokemon-csv/2020-04-23_13:59:42"

@@ -1,6 +1,6 @@
-from lib.aws_client.aws_client import get_glue_context, define_pokemons_final_df, \
+from lib_combination.aws_client.aws_client import get_glue_context, define_pokemons_final_df, \
     write_df_to_s3_bucket
-from lib.conf_utils.conf_utils import get_s3_result_folder_path
+from lib_combination.conf_utils.conf_utils import get_s3_result_folder_path
 
 
 def main():

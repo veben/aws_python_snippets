@@ -1,5 +1,5 @@
 boto3==1.12.43
 botocore==1.15.43
 moto==1.3.14
--r push_files/requirements.txt
+-r push_csv_files/requirements.txt
 -r list_buckets/requirements.txt

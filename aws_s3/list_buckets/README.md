@@ -12,5 +12,5 @@ python -m unittest
 
 ## III. Launch programs
 ```sh
-python list_all_s3_buckets.py
+python list_buckets.py
 ```

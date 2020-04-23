@@ -1,0 +1,4 @@
+aws:
+  default-region: "eu-west-1"
+  bucket-name: "aws-glue-pokemon-csv"
+  profile: "p-dev"

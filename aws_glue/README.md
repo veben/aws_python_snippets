@@ -3,7 +3,8 @@
 ## 📜 Table of Contents
 
 - [ ] [Requirements](../requirements.md)
-- [ ] [CSV files combinations](combine_csv_files/README.md)
+- [ ] [Crawl CSV files](crawl_csv_files/README.md)
+- [ ] [Combine CSV files](combine_csv_files/README.md)
 
 ## Overview
 General: [https://aws.amazon.com/fr/glue/](https://aws.amazon.com/fr/glue/)
