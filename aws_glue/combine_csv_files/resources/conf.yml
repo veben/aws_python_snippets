@@ -1,21 +1,7 @@
 aws:
+  default-region: "eu-west-1"
+  bucket-name: "aws-glue-pokemon-csv"
+  profile: "p-dev"
   glue:
     database: "pokemons"
-    table-v1: "pokemons_v1"
-    table-v2: "pokemons_v2"
-  s3:
-    result-folder-path: "s3://aws-glue-pokemon-tmp/csv_file_result/"
-
-columns: [
-  'id',
-  'identifier',
-  'generation',
-  'first_type',
-  'second_type',
-  'legendary',
-  'base_experience',
-  'attack',
-  'defense',
-  'hp',
-  'speed'
-]
+    job-name: "pokemon-v1-v2-combination"

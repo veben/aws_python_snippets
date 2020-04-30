@@ -1,106 +1,69 @@
 # Combine CVS files
 
-> *Last updated: 2020/04/22*
+> *Last updated: 2020/04/27*
 
 > With Pycharm, mark `combine_csv_files` as **Sources Root**
 
 ## I. Required installations
-If not already done, follow [requirements](../../requirements.md) guide
+If not already done, follow [requirements](../requirements.md) guide
 
 ## II. Crawl CSV files
 If not already done, follow [crawl csv files](../crawl_csv_files/README.md) guide
 
-## III. Create authorization (IAM)
-1. Create **IAM Role** named `AWSGlueServiceRoleDefault`
-2. Add existing policies `AWSGlueServiceRole` and `AmazonS3FullAccess` to this role
+## III. Combine data by script
 
-## IV. Create bucket
-If not already done, create bucket `aws-glue-pokemon-tmp` with folders `file_result_csv` and `combination/scripts`
+### 1. Verify script
+Verify `resources\scripts\pokemon-v1-v2-combination.py` script
 
-## V. Combine data by script
+### 2. Launch unit tests (optional)
+```sh
+python -m unittest discover lib_combination\aws_client
+python -m unittest discover lib_combination\conf_utils
+python -m unittest discover lib_combination\conf_utils
+```
 
-### With AWS Glue job
-1. Add `resources\scripts\pokemon-v1-v2-combination.py` script to `s3://aws-glue-pokemon-tmp/combination/scripts` folder
-2. Add folder `csv_file_result_job` in `aws-glue-pokemon-tmp` bucket
+### 3. Launch program
+```sh
+python combine_csv_files.py
+```
+
+### 4. Check job
+1. Go to AWS console, to **Glue** service
+2. Click `Jobs` to check the job running process
+
+## III-bis. Combine data manually
+1. Add `resources\scripts\pokemon-v1-v2-combination.py` script to `s3://aws-glue-pokemon-csv/combination/scripts` folder
+2. Add folder `csv_file_result_job` in `aws-glue-pokemon-csv` bucket
 3. Go to Glue in order to combine data from pokemon v1 format and v2 format 
     - Create a **Job** named `pokemon-v1-v2-combination`
     - Choose existing IAM Role `AWSGlueServiceRoleDefault`
     - Choose `Spark 2.4` and `Python 3`
     - Choose `Spark` and `Python`
     - Choose *An existing script that you provide*
-    - Choose `s3://aws-glue-pokemon-tmp/combination/scripts/pokemon-v1-v2-combination.py` to store the script
-    - Choose `s3://aws-glue-pokemon-tmp/combination/tmp` to store temporary files
+    - Choose `s3://aws-glue-pokemon-csv/combination/scripts/pokemon-v1-v2-combination.py` to store the script
+    - Choose `s3://aws-glue-pokemon-csv/combination/tmp` to store temporary files
+    - In "Security configuration, script libraries, and job parameters", add following parameters:
+        - `--base`: `pokemons`
+        - `--result_bucket_path`: `s3://aws-glue-pokemon-csv/combination/csv_file_result_job`
+        - `--table_v1`: `pokemons_v1`
+        - `--table_v2`: `pokemons_v2`
 4. Verify the job and launch it. This may be waiting around 10 minutes
 
-### Locally (optional)
-> Follow official guide: [link](https://docs.aws.amazon.com/glue/latest/dg/aws-glue-programming-python-samples-legislators.html)
-1. Generate ssh keys (public key: `pokemons_dev_endpoint.pub`; private key: `pokemons_dev_endpoint`) with this command:
-        ```sh
-        ssh-keygen -t rsa -f C:\Users\<User>/.ssh/pokemons_dev_endpoint -C "<email>"
-        ```
-2. Create Development endpoint for S3 data ([official guide](https://docs.aws.amazon.com/glue/latest/dg/dev-endpoint-tutorial-prerequisites.html))
-    - named `pokemons_dev_endpoint`
-    - Choose existing IAM Role `AWSGlueServiceRoleDefault`
-    - Upload public ssh key
-    - Skip all other step and click Finish (*the provisioning phase took minutes*)
-3. Configure **Pycharm (professional only)** to access to the development endpoint ([official guide](https://docs.aws.amazon.com/glue/latest/dg/dev-endpoint-tutorial-pycharm.html))
-    - Download `PyGlue` lib from here: [link](https://s3.amazonaws.com/aws-glue-jes-prod-us-east-1-assets/etl-1.0/python/PyGlue.zip)
-    - Put it on following folder: `C:\Env\tools\python\python3.7.7\Lib`
-    - Connection:
-        - Type: SFTP
-        - Host: *<public adress of pokemons_dev_endpoint>*
-        - User name: glue
-        - Authentication: Key pair
-        - Private key: `C:\Users\<User>\.ssh\pokemons_dev_endpoint`
-        - Passphrase: *the passphrase asked during key pair generation*
-    - Mappings:
-        - Local Path: `C:\Env\dev\perso\aws_python_snippets`
-        - Deployment Path: `/home/glue/scripts/`
-    - Excluded Paths: `C:\Env\dev\perso\aws_python_snippets\venv`
-    - Upload script to endpoint: Right click on `aws_python_snippets` and `Deployment > Upload to pokemons_dev_endpoint`
-    - Check `Tools > Deployment > Automatic Upload (always)`
-    - Define **remote** Python interpreter
-        - SSH Interpreter
-        - ...
-        - Interpreter: `/usr/bin/gluepython3`
-4. Edit configurations
-Edit following properties in [resources/conf.yml](resources/conf.yml)
-   - result-folder-path: *bucket/folder where you want the file resulting from the combination*
-   - columns: *columns you want to keep*
+## IV. Access logs & errors
+You can access log in `AWS Console > AWS Glue > Crawlers > Logs/Error logs` or directly in **Cloudwatch**
 
-5. Launch program with following commands:
-```sh
-ssh -i C:\Users\<User>\.ssh\pokemons_dev_endpoint glue@<public adress of pokemons_dev_endpoint>
-cd  /home/glue/scripts/aws_glue/combine_csv_files
-python combine_csv_files.py
+```
+...
+16:26:56    Detected region eu-west-1
+16:26:56    Detected glue endpoint https://glue.eu-west-1.amazonaws.com
+16:26:57    YARN_RM_DNS=ip-172-32-87-78.eu-west-1.compute.internal
+16:26:57    JOB_NAME = pokemon-v1-v2-combination
+16:26:57    PYSPARK_VERSION 3 python3
+16:26:57    Specifying eu-west-1 while copying script.
+16:27:02    Completed 1.4 KiB/1.4 KiB (41.0 KiB/s) with 1 file(s) remaining
+16:27:02    download: s3://aws-glue-pokemon-csv/combination/scripts/pokemon-v1-v2-combination.py to ./script_2020-04-23-16-26-57.py
+...
 ```
 
-## VI. Transform to parket format and request
-1. Create bucket **aws-glue-pokemon-parket**
-2. Add folder `query_result_parket` in `aws-glue-pokemon-tmp` bucket
-3. Go to Glue in order to transform the data from `CSV` to `Parquet` format  
-    - Create a **Job** named `pokemon-csv-to-parket-job`
-    - Choose existing IAM Role `AWSGlueServiceRoleDefault`
-    - Choose `Spark` and `Python`
-    - Choose *A proposed script generated by AWS Glue*
-    - Choose `s3://aws-glue-pokemon-tmp/parket/scripts` to store the script
-    - Choose `s3://aws-glue-pokemon-tmp/parket/tmp` to store temporary files
-    - Select table `aws_glue_pokemon_csv` as datasource
-    - Choose *Create table in your data target* with properties:
-        * Datastore: S3
-        * Format: Parket
-        * Target path: `s3://aws-glue-pokemon-parket` }
-4. Verify the script and launch the job. This may be waiting around 10 minutes
-5. Create another table from crawler  
-    - Create crawler `pokemon-parket-crawler`
-    - Select `s3://aws-glue-pokemon-parket` as datasource
-    - Choose existing IAM Role `AWSGlueServiceRoleDefault`
-    - Choose frequency *"Run on demand"*
-    - Choose `pokemons` as database
-    - Run the crawler
-6. Inspect the table created from crawl named `aws_glue_pokemon_parket`
-7. Create the bucket `aws-glue-pokemon-tmp` with the folder `query_result_parket`
-8. Do the same with `aws_glue_pokemon_parket` table
-    - On the **Query Editor** tab, choose the database `pokemons`
-    - Choose `s3://aws-glue-pokemon-parket-query-result/query_result/` as **Query result location**
-    - Launch following request: `SELECT * FROM "pokemons"."aws_glue_pokemon_parket" limit 10;`
+## V. Check resulting file
+You can access your resulting file in `aws-glue-pokemon-csv` bucket in `csv_file_result_job` folder

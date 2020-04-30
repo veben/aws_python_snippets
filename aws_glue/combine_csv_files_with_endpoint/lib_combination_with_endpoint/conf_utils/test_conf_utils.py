@@ -1,13 +1,13 @@
 from unittest import TestCase
 
-from lib_combination.conf_utils.conf_utils import get_database_name, get_table_v1_name, \
+from lib_combination_with_endpoint.conf_utils.conf_utils import get_database_name, get_table_v1_name, \
     get_table_v2_name, get_final_columns_names, get_s3_result_folder_path
 
 
 class TestFileUtils(TestCase):
 
     def test_get_s3_result_folder_path(self):
-        self.assertEqual("s3://aws-glue-pokemon-tmp/csv_file_result/", get_s3_result_folder_path())
+        self.assertEqual("s3://aws-glue-pokemon-csv/csv_file_result/", get_s3_result_folder_path())
 
     def test_get_database_name(self):
         self.assertEqual("pokemons", get_database_name())

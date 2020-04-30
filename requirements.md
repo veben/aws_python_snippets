@@ -1,17 +1,17 @@
 # Requirements
 
-*Last updated: 2020/04/09*
+>*Last updated: 2020/04/23*
 
-## Create free tier account
+## I. Create free tier account
 
 [https://portal.aws.amazon.com/gp/aws/developer/registration/index.html?nc2=h_ct&src=header_signup](https://portal.aws.amazon.com/gp/aws/developer/registration/index.html?nc2=h_ct&src=header_signup)
 
-## Enable Multi-factor authentication (MFA)
+## II. Enable Multi-factor authentication (MFA)
 
 1. Connect to [AWS console](https://aws.amazon.com/fr/console/)
 2. Follow the official guide : [https://console.aws.amazon.com/iam/home?#/security_credentials](https://console.aws.amazon.com/iam/home?#/security_credentials)
 
-## Create Developer user with programatic access
+## III. Create Developer user with programmatic access
 
 > https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console
 
@@ -33,13 +33,13 @@
 	region = eu-west-1
 	```
 
-## Install **Python**
+## IV. Install **Python**
 [Follow this guide](../python/intallation.md)
 
-## Install **AWS CLI**
+## V. Install **AWS CLI**
 [https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html](https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html)
 
-### With python
+> With python
 
 1. Install awscli with command:
 	```sh
@@ -56,7 +56,7 @@
 	aws --version
 	```
 
-## Configure AWS CLI
+## VI. Configure AWS CLI
 
 1. If not done, create/edit `C:\Users\<User>\.aws\credentials` file, and add default credentials configuration
 	```
@@ -71,7 +71,7 @@
 	region=us-west-1
 	```
 
-## Install **aws-mfa**
+## VII. Install **aws-mfa**
 
 1. Install aws-mfa with command:
 	```sh
@@ -88,7 +88,7 @@
 	pip3 show aws-mfa
 	```
 
-## Install **boto3** (the AWS SDK for python):
+## VIII. Install **boto3** (the AWS SDK for python):
 
 1. Install aws-mfa with command:
 	```sh
@@ -108,7 +108,7 @@
 **boto3 credentials priority**: [link](https://boto3.amazonaws.com/v1/documentation/api/latest/guide/configuration.html)
 
 
-## Install **moto** (the AWS mocking tool):
+## IX. Install **moto** (the AWS mocking tool):
 
 1. Install aws-mfa with command:
 	```sh
@@ -125,7 +125,7 @@
 	pip3 show moto
 	```
 
-## Create Administrator user with programatic access (optional, if you need to deat with IAM or other things)
+## X. Create Administrator user with programatic access (optional, if you need to deat with IAM or other things)
 
 1. Connect to [AWS console](https://aws.amazon.com/fr/console/)
 2. Go to **IAM** service

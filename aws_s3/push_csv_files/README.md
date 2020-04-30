@@ -1,5 +1,7 @@
 # Push files to AWS S3
 
+> *Last updated: 2020/04/23*
+
 > With Pycharm, mark `push_csv_files` as **Sources Root**
 
 ## I. Required installations

@@ -1,5 +1,7 @@
 # Define CSV crawling
 
+> *Last updated: 2020/04/23*
+
 > With Pycharm, mark `crawl_csv_files` as **Sources Root**
 
 ## I. Required installations
@@ -12,10 +14,7 @@ If not already done, follow [push csv files](../../aws_s3/push_csv_files/README.
 1. Create **IAM Role** named `AWSGlueServiceRoleDefault`
 2. Add existing policies `AWSGlueServiceRole` and `AmazonS3FullAccess` to this role
 
-## IV. Create bucket
-If not already done, create bucket `aws-glue-pokemon-tmp` with the folder `query_result_csv`
-
-## V. Crawl by script
+## IV. Crawl by script
 
 ### 1. Edit configurations
 Edit following properties in [resources/conf.yml](resources/conf.yml)
@@ -55,9 +54,9 @@ python crawl_csv_files.py
 
 ### 5. Check crawler
 1. Go to AWS console, to **Glue** service
-2. Click `Crawler` to check the crawling process
+2. Click `Crawlers` to check the crawling process
 
-## V-bis. Crawl manually
+## IV-bis. Crawl manually
 1. In AWS console, go to **Glue** service
 2. Create **Database** named `pokemons`
 3. Create **Table** from **Crawler**  
@@ -82,7 +81,7 @@ python crawl_csv_files.py
             - Mark the table as deprecated in the data catalog: **Yes**
     - Run the crawler
 
-## VI. Access logs
+## V. Access logs
 You can access log in `AWS Console > AWS Glue > Crawlers > Logs` or directly in **Cloudwatch**
 
 ```
@@ -96,7 +95,7 @@ You can access log in `AWS Console > AWS Glue > Crawlers > Logs` or directly in 
 ...
 ```
 
-## VII. Access created tables
+## VI. Access created tables
 1. Go to AWS console, to **Glue** service
 2. Click `Tables` to inspect the 2 created tables
     - Database: pokemons
@@ -105,13 +104,13 @@ You can access log in `AWS Console > AWS Glue > Crawlers > Logs` or directly in 
     - objectCount: 2 (number of files processed)
     - delimiter: ,
 
-## VIII. Request created data
+## VII. Request created data
 You can request the data created by crawling with **Athena** service
 
-1. If not already done, create bucket `aws-glue-pokemon-tmp` with the folder `query_result_csv`
+1. If not already done, create bucket `aws-glue-pokemon-csv` with the folder `query_result_csv`
 2. Go to AWS console, Athena service, and request the `pokemons_v1` table
     - On the **Query Editor** tab, choose the database `pokemons`
-    - Choose `s3://aws-glue-pokemon-tmp/query_result_csv/` as **Query result location**
+    - Choose `s3://aws-glue-pokemon-csv/query_result_csv/` as **Query result location**
     - Launch following requests:
         - `SELECT COUNT(*) FROM "pokemons"."pokemons_v1";`
         - `SELECT * FROM "pokemons"."pokemons_v1";`
