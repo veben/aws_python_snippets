@@ -34,7 +34,6 @@
 	```
 
 ## IV. Install **Python**
-[Follow this guide](../python/intallation.md)
 
 ## V. Install **AWS CLI**
 [https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html](https://docs.aws.amazon.com/cli/latest/userguide/install-windows.html)

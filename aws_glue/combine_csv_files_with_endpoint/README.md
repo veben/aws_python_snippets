@@ -1,6 +1,9 @@
 # Combine CVS files
 
-> *Last updated: 2020/04/23*
+> *Last updated: 2020/05/08*
+
+> /!\ This part need to create AWS Glue endpoint. Using a endpoint like that can lead to important costs
+> /!\ See: https://blog.jayway.com/2018/07/03/aws-glue-dev-endpoint-deleter/
 
 > With Pycharm, mark `combine_csv_files_with_endpoint` as **Sources Root**
 
