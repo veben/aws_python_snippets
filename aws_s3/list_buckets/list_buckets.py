@@ -1,6 +1,5 @@
 from typing import Collection
 
-import boto3
 from boto3.session import Session
 
 
@@ -27,7 +26,7 @@ def print_all_bucket_v2(buckets: Collection):
 
 
 def main():
-    session = boto3.Session(profile_name='p-dev')
+    session = Session(profile_name='p-dev')
 
     # session = boto3.Session(
     #     aws_access_key_id=settings.AWS_SERVER_PUBLIC_KEY,
