@@ -1,11 +1,10 @@
 from unittest import TestCase
 
-from boto3 import Session
 from moto import mock_ssm
 
-from read_parameter_store import read_parameter_store
+from read_parameter_store import read_parameter_store, get_ssm_client
 
-SSM_CLIENT = Session().client('ssm')
+SSM_CLIENT = get_ssm_client()
 PARAMETER_NAME = '/config/db/name'
 PARAMETER_VALUE = 'my_db'
 

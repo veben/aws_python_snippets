@@ -1,4 +1,4 @@
-# List AWS SSM
+# Read from parameter store
 
 > With Pycharm, mark `read_parameter_store` as **Sources Root**
 
